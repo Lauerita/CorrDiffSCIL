@@ -114,8 +114,34 @@ def fetch_input_gefs(
 
 
 input_array = fetch_input_gefs(datetime(2023, 1, 1), #initial condition 
-                               timedelta(hours=0)) 
-np.save("corrdiff_inputs.npy", input_array)
+                               timedelta(hours=0)) #desired model run time 
+np.save("corrdiff_inputs.npy", input_array) # saved all the data in the npy file 
+
+
+url = "http://corrdiff-nim-service-laurahu:8000/v1/infer"
+
+files = {
+    "input_array": ("corrdiff_inputs.npy", open("corrdiff_inputs.npy", "rb")),
+}
+data = {
+    "samples": 2,
+    "steps": 14,
+    "seed": 0,
+}
+headers = {
+    "accept": "application/x-tar",
+}
+
+print("Sending inference request to CorrDiff NIM...")
+r = requests.post(url, headers=headers, data=data, files=files, timeout=300)
+
+if r.status_code == 200:
+    with open("output.tar", "wb") as tar:
+        tar.write(r.content)
+    print("Success! Results saved to output.tar")
+else:
+    print(f"Error: {r.status_code}")
+    print(r.content)
 
 
 
