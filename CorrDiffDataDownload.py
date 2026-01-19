@@ -113,6 +113,10 @@ def fetch_input_gefs(
     return input_data 
 
 
-input_array = fetch_input_gefs(datetime(2023, 1, 1), timedelta(hours=0))
+input_array = fetch_input_gefs(datetime(2023, 1, 1), #initial condition 
+                               timedelta(hours=0)) 
 np.save("corrdiff_inputs.npy", input_array)
+
+
+
 
