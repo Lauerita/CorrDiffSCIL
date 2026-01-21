@@ -1,20 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: corrdiff-nim-<YOUR NAME>
+  name: corrdiff-nim-laurahu
   namespace: sdsu-shen-climate-lab
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: corrdiff-nim-<YOUR NAME>
+      app: corrdiff-nim-laurahu
   template:
     metadata:
       labels:
-        app: corrdiff-nim-<YOUR NAME>
+        app: corrdiff-nim-laurahu
     spec:
       imagePullSecrets:
       - name: ngc-secret
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: nautilus.io/csu-tide
+                operator: Exists
+              - key: nvidia.com/gpu.product
+                operator: In
+                values:
+                - NVIDIA-L40
+      restartPolicy: Always
       containers:
       - name: corrdiff-nim
         image: nvcr.io/nim/nvidia/corrdiff:1.0.0
@@ -23,7 +35,7 @@ spec:
           name: http
         env:
         - name: NGC_API_KEY
-          value: "<YOUR API KEY>" 
+          value: "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"
         resources:
           requests:
             memory: "32Gi"
@@ -41,24 +53,16 @@ spec:
         emptyDir:
           medium: Memory
           sizeLimit: 16Gi
-      restartPolicy: Always
-      nodeSelector:
-        nvidia.com/gpu.product: NVIDIA-L40
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: nvidia.com/gpu.product
-                operator: In
-                values:
-                - NVIDIA-L40
       tolerations:
       - key: nautilus.io/csu-tide
         operator: Exists
         effect: NoSchedule
       - key: nautilus.io/sdsu-fix
         operator: Exists
+        effect: NoSchedule
+      - key: nautilus.io/reservation
+        operator: Equal
+        value: csu-tide
         effect: NoSchedule
 ---
 apiVersion: v1
@@ -74,3 +78,4 @@ spec:
     port: 8000
     targetPort: 8000
   type: ClusterIP
+
