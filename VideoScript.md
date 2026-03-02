@@ -86,7 +86,7 @@ kubectl delete service corrdiff-nim-service-laurahu -n sdsu-shen-climate-lab
 
 You are at the end of this video tutorial. For more information on the model, visit NVIDIA's [official webpage](https://docs.nvidia.com/nim/earth-2/corrdiff/latest/overview.html) for CorrDiff NIM or the [model card](https://build.nvidia.com/nvidia/corrdiff/modelcard). 
 
-Thank you so much for watching. 
+Thank you so much for watching. I hope this tutorial gives you a good idea of how to generate weather forecasts using CorrDiff NIM, and I hope you can try and generate your own desired forecasts using this wonderful tool. 
 
 
 
