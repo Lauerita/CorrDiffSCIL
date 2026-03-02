@@ -55,7 +55,7 @@ kubectl get pods -n <YOUR LAB NAMESPACE> | grep corrdiff
 ```
 
 >[!TIP]
->It takes about 5-10 mins for Kubernetes cluster to download the images(~26GB), keep checking the live status of the container in watch mode by running `kubectl get pods -n <YOUR LAB NAMESPACE> -w | grep corrdiff`. The container is ready when the status shows _RUNNING_.
+>It takes about 5-10 mins for the Kubernetes cluster to download the images(~26GB), keep checking the live status of the container in watch mode by running `kubectl get pods -n <YOUR LAB NAMESPACE> -w | grep corrdiff`. The container is ready when the status shows _RUNNING_. To check your live connection logs, run `kubectl logs -f deployment/corrdiff-nim-laurahu -n sdsu-shen-climate-lab` in your terminal. 
 
 
 ## Run CorrDiff NIM
@@ -64,7 +64,7 @@ To make predictions using CorrDiff NIM, a sample script that generates predictio
 
 The script includes API key validation and NIM health check; it is a prerequisite to ensure that the status of both checkpoints is good before running inferences. The runtime for your inference depends on your sample size and step size. Users are recommended to limit the inference runtime by adjusting the timeout. 
 
-Note that CorrDiff NIM only generates raw tensor outputs; users should handle post-processing of the metadata. The sample script utilizes channel-specific ensemble mean and other post-processing strategies that are suitable for hurricane tracking. Please visit the CorrDiff model card for more information on inputs and outputs. 
+Note that CorrDiff NIM only generates raw tensor outputs; users should handle post-processing of the metadata. The sample script includes channel-specific ensemble mean and other post-processing strategies, which are suitable for hurricane tracking. Visit the CorrDiff model card for more information on inputs and outputs. 
 
 The predicted windspeed, temperature, and vorticity for Hurricane Helene:
 
@@ -74,6 +74,13 @@ The predicted hurricane track against the ground truth:
 
 ![Predicted track](https://github.com/xlaurahu/CorrDiffSCIL/blob/main/HurrHele_Prediction_track.png)
 
+## Delete Deployment 
+
+To free up space for other users, one should always delete their NIM container once they are done deploying it. To delete your deployment, run the following commands in your terminal. 
+```
+kubectl delete deployment corrdiff-nim-<YOUR NAME> -n <YOUR LAB NAMESPACE>
+kubectl delete service corrdiff-nim-service-<YOUR NAME> -n <YOUR LAB NAMESPACE>
+```
 
 ## References
 
