@@ -49,7 +49,56 @@ Make sure the status of your pod shows _RUNNING_.
 
 ## Running CorrDiff for Hurricane Helene 
 
-In this [ipynb file](https://github.com/xlaurahu/CorrDiffSCIL/blob/main/CorrDiffHurrHeleVis.ipynb), we have a sample script that deploys the CorrDiff NIM to generate predictions for Hurricane Helene from 9/26/2024 15:00 to 9/27/2024 6:00. I will go through all the code chunks and the purpose for them. 
+### Basic Visualization 
+
+In this [ipynb file](https://github.com/xlaurahu/CorrDiffSCIL/blob/main/CorrDiffHurrHeleVis.ipynb), we have a sample script that deploys the CorrDiff NIM to generate predictions for Hurricane Helene from 9/26/2024 15:00 to 9/27/2024 6:00. 
+
+Important code chunks to point out in the script:
+
+* API key validation and NIM health check
+* Input function, variable, and format 
+* Inference request and format
+* Denormalization scheme
+* Finding latitude and longitude files
+* Applying regional mask 
+
+### Hurricane Track 
+
+In this [ipynb file](https://github.com/xlaurahu/CorrDiffSCIL/blob/main/HurrHeleTrack.ipynb), we generated the predicted track for hurricane Helene over the same time frame. 
+
+Important code chunks to point out in the script:
+
+* Loop through different hours
+* Selected track variable in the applied regional mask 
+* Loading ground truth data
+
+
+## Deleting deployments
+
+It is always good practice to delete your container after completing your task. To delete your deployments, run the following commands in your terminal.
+
+```
+kubectl delete deployment corrdiff-nim-laurahu -n sdsu-shen-climate-lab
+kubectl delete service corrdiff-nim-service-laurahu -n sdsu-shen-climate-lab
+```
+
+## Conclusion 
+
+You are at the end of this video tutorial. For more information on the model, visit NVIDIA's [official webpage](https://docs.nvidia.com/nim/earth-2/corrdiff/latest/overview.html) for CorrDiff NIM or the [model card](https://build.nvidia.com/nvidia/corrdiff/modelcard). 
+
+Thank you so much for watching. 
+
+
+
+
+
+
+  
+
+
+
+
+
 
 
 
