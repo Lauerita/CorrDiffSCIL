@@ -67,9 +67,11 @@ The script includes API key validation and NIM health check; it is a prerequisit
 Note that CorrDiff NIM only generates raw tensor outputs; users should handle post-processing of the metadata. The sample script utilizes channel-specific ensemble mean and other post-processing strategies that are suitable for hurricane tracking. Please visit the CorrDiff model card for more information on inputs and outputs. 
 
 The predicted windspeed, temperature, and vorticity for Hurricane Helene:
+
 ![Animated Hurricane Helene Predictions](https://github.com/xlaurahu/CorrDiffSCIL/blob/main/combined.gif)
 
 The predicted hurricane track against the ground truth:
+
 ![Predicted track](https://github.com/xlaurahu/CorrDiffSCIL/blob/main/HurrHele_Prediction_track.png)
 
 
